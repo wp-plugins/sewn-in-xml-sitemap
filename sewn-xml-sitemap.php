@@ -9,7 +9,7 @@
  * Plugin Name:       Sewn In XML Sitemap
  * Plugin URI:        https://wordpress.org/plugins/sewn-in-xml-sitemap/
  * Description:       Simple system for building XML Sitemaps out of posts when saved. Very simple and efficient.
- * Version:           2.0.1
+ * Version:           2.0.2
  * Author:            Jupitercow
  * Author URI:        http://Jupitercow.com/
  * Contributor:       Jake Snyder
@@ -74,7 +74,7 @@ class Sewn_Xml_Sitemap
 	{
 		$this->prefix      = 'sewn';
 		$this->plugin_name = strtolower(__CLASS__);
-		$this->version     = '2.0.1';
+		$this->version     = '2.0.2';
 		$this->settings    = array(
 			'add_checkbox' => true,
 			'post_types'   => array('post','page'),
@@ -90,7 +90,7 @@ class Sewn_Xml_Sitemap
 							'instructions' => __( 'This will keep the page from showing in the XML sitemap.', $this->plugin_name ),
 						),
 					),
-					'location'        => array (),
+					'post_types'      => array (),
 					'menu_order'      => 0,
 					'context'         => 'normal',
 					'priority'        => 'low',
@@ -248,6 +248,13 @@ class Sewn_Xml_Sitemap
 	 */
 	public function register_field_groups()
 	{
+		// locations for this field group
+		if ( $post_types = $this->post_types() ) {
+			foreach ( $post_types as $post_type ) {
+				$this->settings['field_groups'][0]['post_types'][] = $post_type;
+			}
+		}
+
 		foreach ( $this->settings['field_groups'] as $field_group ) {
 			do_action( "{$this->prefix}/meta/register_field_group", $field_group );
 		}

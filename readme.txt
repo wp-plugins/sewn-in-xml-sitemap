@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=jacob
 Tags: xml sitemap,sitemap,seo
 Requires at least: 3.6.1
 Tested up to: 4.1
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,12 +12,12 @@ Simple way to automatically generate XML Sitemaps when a page or post is saved. 
 
 == Description ==
 
-There are two main customizations available.
+Simple way to automatically generate XML Sitemaps when a page or post is saved. Very simple, no cruft or extra features you won't use. There are two main customizations available.
 
 *	Choose which post types are added (posts and pages by default)
 *	Adds a meta box to all included post types to remove single posts from being added to the sitemap
 
-A nice and simple way to create XML Sitemaps when a page or post is saved. Very simple, no cruft or extra features you won't use. It also works well with our Sewn In Simple SEO plugin. When both are installed, they integrate together.
+It also works well with our [Sewn In Simple SEO](https://github.com/jupitercow/sewn-in-simple-seo) plugin. When both are installed, they integrate together.
 
 = Control what post types are added =
 
@@ -72,13 +72,9 @@ This checkbox also removes posts from wp_list_pages, you can turn that off using
 add_filter( 'sewn/sitemap/wp_list_pages', '__return_false' );
 `
 
-= Customize WordPress SEO plugin =
-
-Works with the our Sewn In Simple SEO plugin. When installed, the XML sitemap checkbox integrates with the SEO fields and this plugin will use the SEO post types. The goal is to keep things very simple and integrated.
-
 = Compatibility =
 
-Works with the Sewn In Simple SEO plugin. When installed, the XML sitemap checkbox integrates with the SEO fields and this plugin will use the SEO post types. The goal is to keep things very simple and integrated.
+Works with the [Sewn In Simple SEO](https://github.com/jupitercow/sewn-in-simple-seo) plugin. When installed, the XML sitemap checkbox integrates with the SEO fields and this plugin will use the SEO post types. The goal is to keep things very simple and integrated.
 
 
 == Installation ==
@@ -95,6 +91,10 @@ Works with the Sewn In Simple SEO plugin. When installed, the XML sitemap checkb
 1. The checkbox to remove posts in the backend.
 
 == Changelog ==
+
+= 2.0.2 - 2015-02-13 =
+
+*   Fixed problem with post_types in new system.
 
 = 2.0.1 - 2015-02-13 =
 
