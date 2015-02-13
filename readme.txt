@@ -10,7 +10,6 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Simple way to automatically generate XML Sitemaps when a page or post is saved. Very simple, no cruft or extra features you won't use.
 
-
 == Description ==
 
 There are two main customizations available.
@@ -77,7 +76,6 @@ add_filter( 'sewn/sitemap/wp_list_pages', '__return_false' );
 
 Works with the our Sewn In Simple SEO plugin. When installed, the XML sitemap checkbox integrates with the SEO fields and this plugin will use the SEO post types. The goal is to keep things very simple and integrated.
 
-
 = Compatibility =
 
 Works with the Sewn In Simple SEO plugin. When installed, the XML sitemap checkbox integrates with the SEO fields and this plugin will use the SEO post types. The goal is to keep things very simple and integrated.
@@ -88,27 +86,23 @@ Works with the Sewn In Simple SEO plugin. When installed, the XML sitemap checkb
 *   Copy the folder into your plugins folder, or use the "Add New" plugin feature.
 *   Activate the plugin via the Plugins admin page
 
-
 == Frequently Asked Questions ==
 
 = No questions yet. =
-
 
 == Screenshots ==
 
 1. The checkbox to remove posts in the backend.
 
-
 == Changelog ==
 
-## 2.0.0 - 2015-02-12
+= 2.0.0 - 2015-02-12 =
 
-- Updated to remove ACF dependency and cleanup functionality.
+*   Updated to remove ACF dependency and cleanup functionality.
 
-## 1.0.3 - 2014-08-03
+= 1.0.3 - 2014-08-03 =
 
-- Added to the repo
-
+*   Added to the repo
 
 == Upgrade Notice ==
 
