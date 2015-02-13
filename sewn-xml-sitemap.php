@@ -74,7 +74,7 @@ class Sewn_Xml_Sitemap
 	{
 		$this->prefix      = 'sewn';
 		$this->plugin_name = strtolower(__CLASS__);
-		$this->version     = '2.0.0';
+		$this->version     = '2.0.1';
 		$this->settings    = array(
 			'add_checkbox' => true,
 			'post_types'   => array('post','page'),
