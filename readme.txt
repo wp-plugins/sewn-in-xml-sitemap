@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=jacob
 Tags: xml sitemap,sitemap,seo
 Requires at least: 3.6.1
 Tested up to: 4.1
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -96,13 +96,17 @@ Works with the Sewn In Simple SEO plugin. When installed, the XML sitemap checkb
 
 == Changelog ==
 
+= 2.0.1 - 2015-02-13 =
+
+*   Bug with the get_field method and connecting to SEO plugin.
+
 = 2.0.0 - 2015-02-12 =
 
 *   Updated to remove ACF dependency and cleanup functionality.
 
 = 1.0.3 - 2014-08-03 =
 
-*   Added to the repo
+*   Added to the repo.
 
 == Upgrade Notice ==
 
