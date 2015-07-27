@@ -9,7 +9,7 @@
  * Plugin Name:       Sewn In XML Sitemap
  * Plugin URI:        https://wordpress.org/plugins/sewn-in-xml-sitemap/
  * Description:       Simple system for building XML Sitemaps out of posts when saved. Very simple and efficient.
- * Version:           2.0.2
+ * Version:           2.0.3
  * Author:            Jupitercow
  * Author URI:        http://Jupitercow.com/
  * Contributor:       Jake Snyder
@@ -74,10 +74,10 @@ class Sewn_Xml_Sitemap
 	{
 		$this->prefix      = 'sewn';
 		$this->plugin_name = strtolower(__CLASS__);
-		$this->version     = '2.0.2';
+		$this->version     = '2.0.3';
 		$this->settings    = array(
 			'add_checkbox' => true,
-			'post_types'   => array('post','page'),
+			'post_types'   => array(''),
 			'field_groups'      => array (
 				array(
 					'id'              => $this->plugin_name,
@@ -111,6 +111,7 @@ class Sewn_Xml_Sitemap
 	{
 		add_action( 'plugins_loaded',                         array($this, 'plugins_loaded') );
 		add_action( 'init',                                   array($this, 'init') );
+		add_action( 'wp_loaded',                              array($this, 'register_field_groups') );
 
 		add_filter( "{$this->prefix}/sitemap/exclude_field",  array($this, 'get_field') );
 	}
@@ -140,10 +141,6 @@ class Sewn_Xml_Sitemap
 	{
 		add_action( 'save_post',                              array($this, 'create_sitemap') );
 		add_filter( 'wp_list_pages_excludes',                 array($this, 'wp_list_pages_excludes') );
-
-		if ( $this->settings['add_checkbox'] ) {
-			$this->register_field_groups();
-		}
 	}
 
 	/**
@@ -154,6 +151,11 @@ class Sewn_Xml_Sitemap
 	 */
 	public function post_types()
 	{
+		$this->settings['post_types'] = get_post_types( array(
+			'public' => true
+		) );
+		unset($this->settings['post_types']['attachment']);
+
 		return apply_filters( "{$this->prefix}/sitemap/post_types", apply_filters( "{$this->prefix}/seo/post_types", apply_filters( 'sewn_seo/post_types', $this->settings['post_types'] ) ) );
 	}
 
@@ -190,15 +192,17 @@ class Sewn_Xml_Sitemap
 
 		foreach ( $postsForSitemap as $post )
 		{
-			setup_postdata($post);
-			$postdate  = explode( ' ', $post->post_modified );
-			$permalink = get_permalink( $post->ID );
-			$frequency = 'monthly';
-			$sitemap  .= "\t<url>\n" .
-				"\t\t<loc>{$permalink}</loc>\n" .
-				"\t\t<lastmod>{$postdate[0]}</lastmod>\n" .
-				"\t\t<changefreq>{$frequency}</changefreq>\n" .
-				"\t</url>\n";
+			if ( apply_filters( "{$this->prefix}/sitemap/post", true, $post ) )
+			{
+				$postdate  = explode( ' ', $post->post_modified );
+				$permalink = get_permalink( $post->ID );
+				$frequency = apply_filters( "{$this->prefix}/sitemap/frequency", 'monthly', $post );
+				$sitemap  .= "\t<url>\n" .
+					"\t\t<loc>{$permalink}</loc>\n" .
+					"\t\t<lastmod>{$postdate[0]}</lastmod>\n" .
+					"\t\t<changefreq>{$frequency}</changefreq>\n" .
+					"\t</url>\n";
+			}
 		}
 
 		$sitemap .= '</urlset>';
@@ -248,15 +252,18 @@ class Sewn_Xml_Sitemap
 	 */
 	public function register_field_groups()
 	{
-		// locations for this field group
-		if ( $post_types = $this->post_types() ) {
-			foreach ( $post_types as $post_type ) {
-				$this->settings['field_groups'][0]['post_types'][] = $post_type;
+		if ( $this->settings['add_checkbox'] )
+		{
+			// locations for this field group
+			if ( $post_types = $this->post_types() ) {
+				foreach ( $post_types as $post_type ) {
+					$this->settings['field_groups'][0]['post_types'][] = $post_type;
+				}
 			}
-		}
 
-		foreach ( $this->settings['field_groups'] as $field_group ) {
-			do_action( "{$this->prefix}/meta/register_field_group", $field_group );
+			foreach ( $this->settings['field_groups'] as $field_group ) {
+				do_action( "{$this->prefix}/meta/register_field_group", $field_group );
+			}
 		}
 	}
 

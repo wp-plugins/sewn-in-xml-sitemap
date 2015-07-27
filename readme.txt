@@ -3,14 +3,16 @@ Contributors: jcow, ekaj
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=jacobsnyder%40gmail%2ecom&lc=US&item_name=Jacob%20Snyder&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
 Tags: xml sitemap,sitemap,seo
 Requires at least: 3.6.1
-Tested up to: 4.1
-Stable tag: 2.0.2
+Tested up to: 4.2.3
+Stable tag: 2.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Simple way to automatically generate XML Sitemaps when a page or post is saved. Very simple, no cruft or extra features you won't use.
 
 == Description ==
+
+= 2.0.3 changed default post types used from only 'post' and 'page' to ALL public post types except "attachment". This is a cleaner approach, but may require customization. Ther is more info on customization below. =
 
 Simple way to automatically generate XML Sitemaps when a page or post is saved. Very simple, no cruft or extra features you won't use. There are two main customizations available.
 
@@ -72,6 +74,25 @@ This checkbox also removes posts from wp_list_pages, you can turn that off using
 add_filter( 'sewn/sitemap/wp_list_pages', '__return_false' );
 `
 
+`
+/**
+ * This filter arrived in 2.0.3
+ *
+ * Remove specific posts programatically. This could go into functions.php or a plugin.
+ *
+ * This example removes all posts that have post meta field of "test" set.
+ */
+add_filter( 'sewn/sitemap/post', 'custom_remove_test_posts', 10, 2 );
+function custom_remove_test_posts( $value, $post )
+{
+	$status = get_metadata( 'post', $post->ID, 'test', true );
+	if ( $status ) {
+		$value = false;
+	}
+	return $value;
+}
+`
+
 = Compatibility =
 
 Works with the [Sewn In Simple SEO](https://github.com/jupitercow/sewn-in-simple-seo) plugin. When installed, the XML sitemap checkbox integrates with the SEO fields and this plugin will use the SEO post types. The goal is to keep things very simple and integrated.
@@ -91,6 +112,12 @@ Works with the [Sewn In Simple SEO](https://github.com/jupitercow/sewn-in-simple
 1. The checkbox to remove posts in the backend.
 
 == Changelog ==
+
+= 2.0.3 - 2015-07-27 =
+
+*   Updated the default post types to ALL public post types except 'attachment'.
+*	Add filter for posts on sitemap creation to granularly control which posts are added when needed.
+*	Added filter for "frequency".
 
 = 2.0.2 - 2015-02-13 =
 
